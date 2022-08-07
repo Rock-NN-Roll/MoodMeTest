@@ -1,0 +1,90 @@
+#title
+
+# instruction
+指南: 在《自·信》的世界中，你将使用面部表情来为接下来的人生做出选择...
+测试相机：请打开摄像头，将面部对准屏幕里的框
+
+# gender
+你的性别是？
+@choice "男"
+@choice "女"
+@stop
+
+#sceneBaby
+@back 出生
+睁开眼睛第一次看到爸爸妈妈，你想对他们...
+@choice "笑"
+@choice "哭"
+@stop
+
+# photoFamily
+和爸爸妈妈照一张全家福吧
+@choice "笑"
+@choice "哭"
+@stop
+
+# sceneStranger
+@back 家人
+陌生的父母朋友前来你家拜访...
+@choice "热情地打招呼"
+@choice "自己回房间玩"
+@stop
+
+# photoSchool
+@back school
+在学校门口拍一张入学照吧！
+@choice "笑"
+@choice "哭"
+@stop
+
+# sceneSchool
+@back 排挤
+下课地时候看到同桌被高年级的同学欺负...
+@choice "幸灾乐祸"
+@choice "想办法帮助他"
+@stop
+
+# photoExam
+毕业考就要来临，需要上交一张准考证照片！
+@choice "笑"
+@choice "哭"
+@stop
+
+# sceneExam1
+开始考试！
+考试对学生来说是（ ）的事情。
+@choice "一如既往" goto:.sceneExam2
+@choice "平平淡淡" goto:.sceneExam2
+@choice "家常便饭" goto:.sceneExam2
+@choice "习以为常" goto:.sceneScore1
+@stop
+
+# sceneExam2
+开始考试！
+找规律：3，2，3，7，18，（）
+@choice "36" goto:.sceneScore0
+@choice "47" goto:.sceneScore1
+@choice "24" goto:.sceneScore0
+@choice "70" goto:.sceneScore0
+@stop
+
+# sceneScore0
+拿到成绩单，分数不太理想...
+@choice "难过"
+@choice "无所谓"
+@stop
+
+# sceneScore1
+拿到成绩单，考出了比预想还高的成绩...
+@choice "向同学炫耀"
+@choice "无所谓"
+@stop
+
+# sceneWork
+大学毕业后，准备找一份工作开始赚钱...
+
+# photoWork
+拍一张工牌照片吧！
+
+
+@stop
