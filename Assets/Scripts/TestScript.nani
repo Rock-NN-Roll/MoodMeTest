@@ -1,7 +1,9 @@
-#title
+# start
+@bgm moodyBGM volume:0.5 loop:true
+@back title
 
 # instruction
-指南: 在《自·信》的世界中，你将使用面部表情来为接下来的人生做出选择...
+指南: 在MoodyMe的世界中，你将使用面部表情来为接下来的人生做出选择...
 测试相机：请打开摄像头，将面部对准屏幕里的框
 
 # gender
@@ -10,14 +12,24 @@
 @choice "女"
 @stop
 
-#sceneBaby
+# sceneBaby
 @back 出生
+@sfx baby
 睁开眼睛第一次看到爸爸妈妈，你想对他们...
-@choice "笑"
-@choice "哭"
+@choice "笑" goto:.sceneBabySmile
+@choice "哭" goto:.sceneBabyCry
 @stop
 
+# sceneBabySmile
+爸爸妈妈很开心，给你取名叫笑笑。
+@goto .photoFamily
+
+# sceneBabyCry
+妈妈赶紧抱起你，哄你睡觉。
+@goto .photoFamily
+
 # photoFamily
+@back familyphotobg
 和爸爸妈妈照一张全家福吧
 @choice "笑"
 @choice "哭"
@@ -27,7 +39,7 @@
 @back 家人
 陌生的父母朋友前来你家拜访...
 @choice "热情地打招呼"
-@choice "自己回房间玩"
+@choice "自己回房间玩" set:score++
 @stop
 
 # photoSchool
@@ -40,17 +52,19 @@
 # sceneSchool
 @back 排挤
 下课地时候看到同桌被高年级的同学欺负...
-@choice "幸灾乐祸"
+@choice "幸灾乐祸" set:score++
 @choice "想办法帮助他"
 @stop
 
 # photoExam
+@back 准考证
 毕业考就要来临，需要上交一张准考证照片！
 @choice "笑"
 @choice "哭"
 @stop
 
 # sceneExam1
+@back exam
 开始考试！
 考试对学生来说是（ ）的事情。
 @choice "一如既往" goto:.sceneExam2
@@ -60,7 +74,7 @@
 @stop
 
 # sceneExam2
-开始考试！
+继续考试！
 找规律：3，2，3，7，18，（）
 @choice "36" goto:.sceneScore0
 @choice "47" goto:.sceneScore1
@@ -69,22 +83,69 @@
 @stop
 
 # sceneScore0
+@back 困难
 拿到成绩单，分数不太理想...
-@choice "难过"
-@choice "无所谓"
+@choice "难过" goto:.sceneWork set:score++
+@choice "无所谓" goto:.sceneWork
 @stop
 
 # sceneScore1
+@back 困难
 拿到成绩单，考出了比预想还高的成绩...
-@choice "向同学炫耀"
-@choice "无所谓"
+@choice "向同学炫耀" goto:.sceneAbroad set:score++
+@choice "无所谓" goto:.sceneAbroad
 @stop
 
 # sceneWork
-大学毕业后，准备找一份工作开始赚钱...
+@back 工作
+大学毕业后，准备找一份工作开始赚钱。
+你因为工作来到一座陌生的城市...
+@choice 担心难以适应新的环境 set:score++
+@choice 期待新的生活
+@stop
 
 # photoWork
-拍一张工牌照片吧！
-
-
+新入职公司，拍一张工作牌照片吧！
+@choice "笑"
+@choice "哭"
 @stop
+
+# sceneOffice
+初入职场，有很多不懂的事，经理前来指出你工作上的失误...
+@choice 赶紧承认错误 goto.sceneLetter0
+@choice 尝试辩解来推卸责任 set:score++ goto.sceneLetter0
+@stop
+
+
+# sceneAbroad
+@back 选择
+大学毕业后，准备出国继续深造...
+
+# photoPassport
+拍一张护照照片吧！
+@choice "笑"
+@choice "哭"
+@stop
+
+# sceneAbroad2
+出国的前一晚上，因为即将离开故土难以入眠...
+@choice 担心难以适应新的环境 set:score++
+@choice 期待新的生活
+@stop
+
+# sceneAbroad3
+@back 孤独
+虽然国外学习的生活充实忙碌，但时常感到孤独....
+@choice 打电话向朋友倾诉 goto.sceneLetter0
+@choice 自己一个人排解 set:score++ goto.sceneLetter0
+@stop
+
+# sceneLetter0
+开启新的生活已经有一些时日了，这段时间偶尔会想起学生时代的生活，除了习以为常的考试，也决定了我的性格。
+@if score<=1
+	0-1 我很有自信心，能与人和睦相处。在今后的生活中，希望这样的自信可以伴随着我迎接更多挑战。
+@elseif 2<=score<=3
+	2-3 有时我会缺乏一些自信心，行事可能保守缺少魄力，但我仍安于现状，生活在平静的环境中。
+@else
+  4-5 有时候发现，即使我在表面上自信满满，但始终有一种强烈的自卑感在心中，让我在自负和自卑的两级来回徘徊。有时这样的矛盾让我感到痛苦，也许我也该需要做出一些改变了....
+@endif

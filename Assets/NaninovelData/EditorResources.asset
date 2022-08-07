@@ -145,13 +145,13 @@ MonoBehaviour:
       guid: e3b234b4273b7f64ab3f1d9fe425ed23
     - name: SettingsUI
       pathPrefix: UI
-      guid: 65c37f59e9b266f468dd5381fdc03fc3
+      guid: d97fc4bf5b5074bdabe0084018765a70
     - name: TipsUI
       pathPrefix: UI
       guid: f5aae572225ee1b4c96d1a17fc5cb073
     - name: TitleUI
       pathPrefix: UI
-      guid: 4b121aa1be1b7e04480b452c595ff17a
+      guid: c0c422509b5ae4c5d9928b4d275c1750
     - name: VariableInputUI
       pathPrefix: UI
       guid: bb95f484e341dcd4391a572f22b7d067
@@ -166,6 +166,12 @@ MonoBehaviour:
     - name: TestScript
       pathPrefix: Scripts
       guid: d053406e0d6bb45cfa26176b1b227725
+    - name: title
+      pathPrefix: Scripts
+      guid: 713b8b70729c8496dafa922cf017919c
+    - name: initialization
+      pathPrefix: Scripts
+      guid: f706105003a7e4ae6856b096a624eb11
   - Id: Characters/e07b260d-6469-41a0-9786-384fa5cddecc
     Resources:
     - name: Happy
@@ -213,3 +219,22 @@ MonoBehaviour:
     - name: "\u5B64\u72EC"
       pathPrefix: Backgrounds/MainBackground
       guid: 4df1c151d4c7c47078ce73005e30bdf6
+    - name: exam
+      pathPrefix: Backgrounds/MainBackground
+      guid: d015cb728339547e0a417c3871e0c483
+    - name: "\u51C6\u8003\u8BC1"
+      pathPrefix: Backgrounds/MainBackground
+      guid: ea2df0807aa704ca1aaec92db89d466b
+    - name: title
+      pathPrefix: Backgrounds/MainBackground
+      guid: 5cdefb6ad9038479e984ef34b65b6a97
+  - Id: Unlockables
+    Resources: []
+  - Id: Audio
+    Resources:
+    - name: moodyBGM
+      pathPrefix: Audio
+      guid: 9de43afa6c1a3420e8c1c4f56aacc680
+    - name: baby
+      pathPrefix: Audio
+      guid: f0f5f0ed3322c4fabb8953ce8ca9294f
