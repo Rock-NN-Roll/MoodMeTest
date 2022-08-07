@@ -163,9 +163,9 @@ MonoBehaviour:
       guid: dd85ce99288c2f8488447fa511b1c0d6
   - Id: Scripts
     Resources:
-    - name: TestHelloWorldScript
+    - name: TestScript
       pathPrefix: Scripts
-      guid: c640ce2fb47b94f4ba439ddce64f11f5
+      guid: d053406e0d6bb45cfa26176b1b227725
   - Id: Characters/e07b260d-6469-41a0-9786-384fa5cddecc
     Resources:
     - name: Happy
@@ -182,3 +182,34 @@ MonoBehaviour:
     - name: Sad
       pathPrefix: Characters/TestCharacter
       guid: dffef66376be4fa480fb02b19edbe903
+  - Id: Backgrounds/4df8bb94-601a-45e2-81e2-a27a5b3b5f59
+    Resources: []
+  - Id: Backgrounds/35741884-8a52-48ec-82d9-dcdf1bafe104
+    Resources:
+    - name: school
+      pathPrefix: Backgrounds/MainBackground
+      guid: c693f80bb3fe94f78bcc809c15ff63f6
+    - name: "\u9009\u62E9"
+      pathPrefix: Backgrounds/MainBackground
+      guid: fb604aa435d904567b6aacb6420491d3
+    - name: "\u6392\u6324"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 72a008b4a03f44bbd84947b138af2c07
+    - name: "\u51FA\u751F"
+      pathPrefix: Backgrounds/MainBackground
+      guid: c3cb75fe2024e4776a5eba5a84a5811c
+    - name: "\u5BB6\u4EBA"
+      pathPrefix: Backgrounds/MainBackground
+      guid: b2ff57ea9180b4cc4a47e28d2b01a1eb
+    - name: "\u5DE5\u4F5C"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 883cb3dfa6c9148128bf79b200e781a7
+    - name: "\u51FA\u56FD"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 7f250b12456b940f490f0fb87d36f4e4
+    - name: "\u56F0\u96BE"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 9b4a2458fc19143b6ba91e0e171acc70
+    - name: "\u5B64\u72EC"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 4df1c151d4c7c47078ce73005e30bdf6
