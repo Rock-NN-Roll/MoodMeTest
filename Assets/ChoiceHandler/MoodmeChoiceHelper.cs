@@ -59,7 +59,7 @@ public class MoodmeChoiceHelper : MonoBehaviour
     }
     private void MakeChoice()
     {
-        if (_smoothHappyValue < happyChoiceshreshold)
+        if (_smoothHappyValue > happyChoiceshreshold)
         {
             ChoiceButtons[0].onClick?.Invoke();
         }
@@ -76,7 +76,7 @@ public class MoodmeChoiceHelper : MonoBehaviour
     private void Update()
     {
         _smoothHappyValue = _smoothHappyValue * 0.95 + _emotionsManager.Happy * 0.05;
-        theHappinessSlider.value = (float)_smoothHappyValue;
+        theHappinessSlider.value = 0.5f - (float)_smoothHappyValue;
         if (isCountingDown)
         {
             curRemainingInSeconds -= Time.deltaTime;
