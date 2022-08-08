@@ -31,23 +31,25 @@ namespace MoodMe
         // Start is called before the first frame update
         void Start()
         {
-			if (PlayerPrefs.GetInt("Webcam")>=0)
+            Debug.Log($"Before PlayerPrefs Device Index is: {DeviceIndex}");
+			if (PlayerPrefs.GetInt("Webcam")>0)
             {
                 DeviceIndex = PlayerPrefs.GetInt("Webcam");
             }									
             //Webcam select
             try
             {
-                Debug.Log("DEVICES LIST");
                 for (int cameraIndex = 0; cameraIndex < WebCamTexture.devices.Length; cameraIndex++)
                 {
                     Debug.Log(cameraIndex + " name " + WebCamTexture.devices[cameraIndex].name + " isFrontFacing " + WebCamTexture.devices[cameraIndex].isFrontFacing);
                 }
                 DeviceIndex = (int)Mathf.Clamp(DeviceIndex, 0, WebCamTexture.devices.Length);
+
                 if (DeviceIndex > WebCamTexture.devices.Length - 1)
                 {
                     DeviceIndex = WebCamTexture.devices.Length - 1;
                 }
+                
                 //Debug.Log("DEVICE CHOICE");
                 string camName = WebCamTexture.devices[DeviceIndex].name;
                 CameraTexture = new WebCamTexture(camName, _width, _height, 30);
@@ -66,7 +68,6 @@ namespace MoodMe
                 Debug.Log("DEVICES WAIT");
                 StartCoroutine(WaitForWebCamAndInitialize(CameraTexture));
                 Debug.Log("Camera Texture size " + CameraTexture.width + " x " + CameraTexture.height);
-
             }
             else
             {
@@ -74,7 +75,6 @@ namespace MoodMe
                 _webcamSet = true;
             }
             //RGBA buffer creation
-
         }
 
         public static bool WebcamReady

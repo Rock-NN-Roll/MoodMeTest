@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using MoodMe;
 using Naninovel;
 using Naninovel.UI;
@@ -13,6 +14,8 @@ public class MoodmeChoiceHelper : MonoBehaviour
     private EmotionsManager _emotionsManager;
     private double _smoothHappyValue;
     public Slider theHappinessSlider;
+    public Transform examplePanel;
+    public Button showVideButton;
     
     public Text CountDownText;
     
@@ -20,6 +23,9 @@ public class MoodmeChoiceHelper : MonoBehaviour
     public int countDownInSeconds;
     public float curRemainingInSeconds;
     public bool isCountingDown = false;
+    public float defaultVideoPanelY;
+    public float targetVideoPanelY;
+    public bool showVideoFlag;
     // Start is called before the first frame update    
     [SerializeField]
     private List<Button> ChoiceButtons
@@ -27,15 +33,37 @@ public class MoodmeChoiceHelper : MonoBehaviour
         get;
         set;
     }
+
+    public Sprite smileFaceSprite;
+    public Sprite sadFaceSprite;
+    
     void Start()
     {
         _choiceHandlerPanel = this.GetComponent<ChoiceHandlerPanel>();
         var GO2 = FindObjectOfType<EmotionsManager>();
         _emotionsManager = GO2.GetComponent<EmotionsManager>();
         _smoothHappyValue = 0.0f;
+        showVideButton.onClick.AddListener(TurnVideoOnOff);
         _choiceHandlerPanel.OnChoice += OnChoiceChosen;
         _choiceHandlerPanel.OnVisibilityChanged += OnVisibilityChanged;
     }
+
+    private void TurnVideoOnOff()
+    {
+        Debug.Log($"Turning video on/off");
+        showVideoFlag = !showVideoFlag;
+        if (showVideoFlag)
+        {
+            Debug.Log($"Turning video on");
+            examplePanel.DOLocalMoveY(targetVideoPanelY,0.5f);
+        }
+        else
+        {
+            Debug.Log($"Turning video off");
+            examplePanel.DOLocalMoveY(defaultVideoPanelY,0.5f);
+        }
+    }
+    
     private void OnVisibilityChanged(bool visibility)
     {
         if (visibility == true)
@@ -48,6 +76,8 @@ public class MoodmeChoiceHelper : MonoBehaviour
         }
         else
         {
+            showVideoFlag = true;
+            TurnVideoOnOff();
             CountDownText.gameObject.SetActive(false);
             theHappinessSlider.gameObject.SetActive(false);
         }
@@ -71,6 +101,8 @@ public class MoodmeChoiceHelper : MonoBehaviour
     private void OnChoiceChosen(ChoiceState choiceState)
     {
         Debug.Log($"{choiceState.Summary} Choice chosen!");
+        showVideoFlag = true;
+        TurnVideoOnOff();
     }
 
     private void Update()
@@ -82,7 +114,7 @@ public class MoodmeChoiceHelper : MonoBehaviour
             curRemainingInSeconds -= Time.deltaTime;
             if (curRemainingInSeconds >= 0)
             {
-                CountDownText.text = ((int)curRemainingInSeconds).ToString();
+                CountDownText.text = ((int)curRemainingInSeconds).ToString() + " s";
             }
             else
             {
@@ -107,5 +139,7 @@ public class MoodmeChoiceHelper : MonoBehaviour
     private void OnDestroy()
     {
         _choiceHandlerPanel.OnChoice -= OnChoiceChosen;
+        _choiceHandlerPanel.OnVisibilityChanged -= OnVisibilityChanged;
+        showVideButton.onClick.RemoveAllListeners();
     }
 }

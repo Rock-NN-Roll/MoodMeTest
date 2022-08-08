@@ -316,3 +316,8 @@ MonoBehaviour:
       guid: 8bc7a91180e3c46829c502fc39bdbbec
   - Id: CharacterAvatars
     Resources: []
+  - Id: ChoiceHandlers/c9418415-fc10-44de-9422-1460724ab8fb
+    Resources:
+    - name: ButtonMoodMe
+      pathPrefix: ChoiceHandlers
+      guid: f0d3f0564960dc44cb7eb7212c1ee9a7
