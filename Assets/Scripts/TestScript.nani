@@ -8,8 +8,8 @@
 
 # gender
 你的性别是？
-@choice "男"
-@choice "女"
+@choice "男" pos:200,300 handler:ButtonMoodMe
+@choice "女" pos:500,300 handler:ButtonMoodMe
 @stop
 
 # sceneBaby

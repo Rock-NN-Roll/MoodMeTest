@@ -238,3 +238,8 @@ MonoBehaviour:
     - name: baby
       pathPrefix: Audio
       guid: f0f5f0ed3322c4fabb8953ce8ca9294f
+  - Id: ChoiceHandlers/c9418415-fc10-44de-9422-1460724ab8fb
+    Resources:
+    - name: ButtonMoodMe
+      pathPrefix: ChoiceHandlers
+      guid: f0d3f0564960dc44cb7eb7212c1ee9a7

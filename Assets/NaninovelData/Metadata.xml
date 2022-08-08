@@ -351,6 +351,10 @@
         &lt;Path&gt;baby&lt;/Path&gt;
         &lt;Type&gt;Audio&lt;/Type&gt;
       &lt;/Resource&gt;
+      &lt;Resource&gt;
+        &lt;Path&gt;ButtonMoodMe&lt;/Path&gt;
+        &lt;Type&gt;ChoiceHandlers&lt;/Type&gt;
+      &lt;/Resource&gt;
     &lt;/Resources&gt;
     &lt;Constants /&gt;
     &lt;Variables&gt;
