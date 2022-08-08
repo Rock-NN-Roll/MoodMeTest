@@ -21,5 +21,8 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OverrideObjectsLayer: 1
   ObjectsLayer: 5
-  FontOptions: []
+  FontOptions:
+  - FontName: hb
+    Font: {fileID: 12800000, guid: b2774072fbed2473aac2cfc3273eafe1, type: 3}
+    TMPFont: {fileID: 0}
   DefaultFont: 

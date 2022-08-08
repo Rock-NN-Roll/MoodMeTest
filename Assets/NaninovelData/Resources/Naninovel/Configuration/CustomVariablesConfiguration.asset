@@ -15,3 +15,13 @@ MonoBehaviour:
   PredefinedVariables:
   - name: score
     value: 0
+  - name: familyphoto
+    value: 0
+  - name: zkz
+    value: 0
+  - name: schoolphoto
+    value: 0
+  - name: passportphoto
+    value: 0
+  - name: gp
+    value: 0
