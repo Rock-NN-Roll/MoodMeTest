@@ -30,8 +30,11 @@ namespace MoodMe
         public int ProcessEveryNFrames = 15;
         [Header("Processing")]
         public bool FilterAllZeros = true;
-        [Range(0, 29f)]
-        public int Smoothing;
+        [Range(0.1f, 60f)]
+        public float Frequency = 30f;
+        [Range(0.1f, 60f)]
+        public float MinCutOff = 1.1f;
+
         [Header("Emotions")]
         public bool TestMode = false;
         [Range(0, 1f)]
@@ -53,6 +56,8 @@ namespace MoodMe
         public static float EmotionIndex;
 
         public static MoodMeEmotions.MDMEmotions Emotions;
+        public static bool BufferProcessed = false;
+        public static bool ValidData = false;										   
         private static MoodMeEmotions.MDMEmotions CurrentEmotions;
 
 
@@ -66,11 +71,13 @@ namespace MoodMe
 
       
         private byte[] _buffer;
-        private bool _bufferProcessed = false;
+
 
         private int NFramePassed;
 
         private static DateTime timestamp;
+
+        private OneEuroFilter angryFilter, disgustFilter, happyFilter, neutralFilter, sadFilter, scaredFilter, surprisedFilter;
 
 
 
@@ -78,6 +85,15 @@ namespace MoodMe
         void Start()
         {
             _emotionNN = new EmotionsInterface(EmotionNetworkManager, FaceDetectorManager);
+
+            angryFilter = new OneEuroFilter(Frequency, MinCutOff);
+            disgustFilter = new OneEuroFilter(Frequency, MinCutOff);
+            happyFilter = new OneEuroFilter(Frequency, MinCutOff);
+            neutralFilter = new OneEuroFilter(Frequency, MinCutOff);
+            sadFilter = new OneEuroFilter(Frequency, MinCutOff);
+            scaredFilter = new OneEuroFilter(Frequency, MinCutOff);
+            surprisedFilter = new OneEuroFilter(Frequency, MinCutOff);
+
 
             //int remainingDays = _emotionNN.SetLicense(Email == "" ? null : Email, EnvKey == "" ? null : EnvKey);
 
@@ -99,7 +115,7 @@ namespace MoodMe
             //{
             //    Debug.Log("Lifetime license!");
             //}
-         
+
         }
 
         void OnDestroy()
@@ -112,7 +128,8 @@ namespace MoodMe
         void LateUpdate()
         {
             //If a Render Texture is provided in the VideoTexture (or just a still image), Webcam image will be ignored
-
+            BufferProcessed = false;
+            ValidData = false;
             if (!TestMode)
             {
                 if (CameraManager.WebcamReady)
@@ -124,24 +141,23 @@ namespace MoodMe
 
                         try
                         {
-
                             _emotionNN.ProcessFrame();
-                            _bufferProcessed = true;
+                            BufferProcessed = true;
 
                         }
                         catch (Exception ex)
                         {
                             Debug.Log(ex.Message);
-                            _bufferProcessed = false;
+                            BufferProcessed = false;
                         }
 
-                        if (_bufferProcessed)
+                        if (BufferProcessed)
                         {
-                            _bufferProcessed = false;                         
+                            ValidData = !_emotionNN.DetectedEmotions.AllZero;                        
                             if (!(_emotionNN.DetectedEmotions.AllZero && FilterAllZeros))
                             {
                                 CurrentEmotions = _emotionNN.DetectedEmotions;
-                                Emotions = Filter(Emotions, CurrentEmotions, Smoothing);
+                                Emotions = Filter(Emotions, CurrentEmotions, Frequency, MinCutOff);
                                 //Debug.Log("angry " + Emotions.angry);
                                 //Debug.Log("disgust " + Emotions.disgust);
                                 //Debug.Log("happy " + Emotions.happy);
@@ -157,6 +173,11 @@ namespace MoodMe
                                 Scared = Emotions.scared;
                                 Surprised = Emotions.surprised;
                             }
+                            else
+                            {
+                                ValidData = false;
+                                BufferProcessed = false;
+                            }										 
 
                         }
                         else
@@ -179,20 +200,26 @@ namespace MoodMe
             }
             EmotionIndex = (((3f * Happy + Surprised - (Sad + Scared + Disgust + Angry)) / 3f) + 1f) / 2f;
 
+            angryFilter.UpdateParams(Frequency, MinCutOff);
+            disgustFilter.UpdateParams(Frequency, MinCutOff);
+            happyFilter.UpdateParams(Frequency, MinCutOff);
+            neutralFilter.UpdateParams(Frequency, MinCutOff);
+            sadFilter.UpdateParams(Frequency, MinCutOff);
+            scaredFilter.UpdateParams(Frequency, MinCutOff);
+            surprisedFilter.UpdateParams(Frequency, MinCutOff);
+
         }
 
         // Smoothing function
-        MoodMeEmotions.MDMEmotions Filter(MoodMeEmotions.MDMEmotions target, MoodMeEmotions.MDMEmotions source, int SmoothingGrade)
+        MoodMeEmotions.MDMEmotions Filter(MoodMeEmotions.MDMEmotions target, MoodMeEmotions.MDMEmotions source, float frequency, float mincutoff)
         {
-            float targetFactor = SmoothingGrade / 30f;
-            float sourceFactor = (30 - SmoothingGrade) / 30f;
-            target.angry = target.angry * targetFactor + source.angry * sourceFactor;
-            target.disgust = target.disgust * targetFactor + source.disgust * sourceFactor;
-            target.happy = target.happy * targetFactor + source.happy * sourceFactor;
-            target.neutral = target.neutral * targetFactor + source.neutral * sourceFactor;
-            target.sad = target.sad * targetFactor + source.sad * sourceFactor;
-            target.scared = target.scared * targetFactor + source.scared * sourceFactor;
-            target.surprised = target.surprised * targetFactor + source.surprised * sourceFactor;
+            target.angry = angryFilter.Filter(source.angry);
+            target.disgust = disgustFilter.Filter(source.disgust);
+            target.happy = happyFilter.Filter(source.happy);
+            target.neutral = neutralFilter.Filter(source.neutral);
+            target.sad = sadFilter.Filter(source.sad);
+            target.scared = scaredFilter.Filter(source.scared);
+            target.surprised = surprisedFilter.Filter(source.surprised);
 
             return target;
         }

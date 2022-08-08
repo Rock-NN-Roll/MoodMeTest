@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Naninovel.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,7 +13,7 @@ namespace Naninovel.UI
     /// Represents a view for choosing between a set of choices.
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
-    public class ChoiceHandlerPanel : CustomUI, IManagedUI
+    public partial class ChoiceHandlerPanel : CustomUI, IManagedUI
     {
         [Serializable]
         public new class GameState
@@ -173,6 +174,13 @@ namespace Naninovel.UI
                     AddChoiceButton(buttonState);
 
             removeAllButtonsPending = state.RemoveAllButtonsPending;
+        }
+    }
+    public partial class ChoiceHandlerPanel
+    {
+        public List<ChoiceHandlerButton> ChoiceHandlerButtons
+        {
+            get => this.choiceButtons;
         }
     }
 }

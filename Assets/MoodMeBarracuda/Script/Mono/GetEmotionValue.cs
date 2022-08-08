@@ -8,6 +8,7 @@ namespace MoodMe
     [RequireComponent(typeof(Slider))]
     public class GetEmotionValue : MonoBehaviour
     {
+        private Slider thisSlider;
         public enum EmotionEnum
         {
             Angry, Disgust, Happy, Neutral, Sad, Scared, Surprised, EmotionIndex
@@ -17,14 +18,12 @@ namespace MoodMe
         // Start is called before the first frame update
         void Start()
         {
-
+            thisSlider = GetComponent<Slider>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            Slider thisSlider = GetComponent<Slider>();
-
             switch (Emotion)
             {
                 case EmotionEnum.Angry:

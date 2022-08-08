@@ -38,8 +38,11 @@ namespace MoodMe
         private IWorker engine;
 
         private string[] EmotionsLabelFull = { "Angry", "Disgusted", "Scared", "Happy", "Sad", "Surprised", "Neutral" };
+
         //private string[] EmotionsLabel = { "Angry", "Disgusted", "Scared", "Happy", "Sad", "Surprised", "Neutral" };             
-        private string[] EmotionsLabel = { "Neutral", "Surprised", "Sad" };
+        //private string[] EmotionsLabel = { "Neutral", "Surprised", "Sad" };
+        private string[] EmotionsLabel = { "Neutral", "Happy", "Surprised", "Sad"};
+        //private string[] EmotionsLabel = { "Neutral", "Angry", "Disgusted", "Scared" };
 
 
         private Tensor tensor;
@@ -86,7 +89,7 @@ namespace MoodMe
             DateTime timestamp;
 
             timestamp = DateTime.Now;
-            output = engine.ExecuteAndWaitForCompletion(tensor);
+            output = engine.Execute(tensor).CopyOutput();
             //Debug.Log("EMOTIONS INFERENCE TIME: " + (DateTime.Now - timestamp).TotalMilliseconds + " ms");
             float[] results = output.data.Download(output.shape);
 
@@ -106,6 +109,7 @@ namespace MoodMe
         {
             output.Dispose();
             tensor.Dispose();
+			engine.Dispose();				 
         }
 
        
