@@ -3,41 +3,38 @@
 @back title
 
 # instruction
-指南: 在MoodyMe的世界中，你将使用面部表情来为接下来的人生做出选择...
+@back instruction01
+操作指南: 在MoodyMe的世界中，你将使用面部表情来为自己接下来的人生做出选择...
 测试相机：请打开摄像头，将面部对准屏幕里的框
-
-# gender
-你的性别是？
-@choice "男" pos:200,300 handler:ButtonMoodMe
-@choice "女" pos:500,300 handler:ButtonMoodMe
-@stop
 
 # sceneBaby
 @back 出生
 @sfx baby
-睁开眼睛第一次看到爸爸妈妈，你想对他们...
+睁开眼睛第一次看到爸爸妈妈，我想对他们...
 @choice "笑" goto:.sceneBabySmile
 @choice "哭" goto:.sceneBabyCry
 @stop
 
 # sceneBabySmile
-爸爸妈妈很开心，给你取名叫笑笑。
+@sfx babysmile
+爸爸妈妈很开心，给我取名叫笑笑。
 @goto .photoFamily
 
 # sceneBabyCry
-妈妈赶紧抱起你，哄你睡觉。
+@sfx babycry
+妈妈赶紧抱起我，哄我睡觉。
 @goto .photoFamily
 
 # photoFamily
 @back familyphotobg
 和爸爸妈妈照一张全家福吧
-@choice "笑"
-@choice "哭"
+@choice "笑" set:familyphoto=0
+@choice "哭" set:familyphoto=1
 @stop
 
 # sceneStranger
 @back 家人
-陌生的父母朋友前来你家拜访...
+陌生的父母朋友前来我家拜访...
 @choice "热情地打招呼"
 @choice "自己回房间玩" set:score++
 @stop
@@ -45,13 +42,14 @@
 # photoSchool
 @back school
 在学校门口拍一张入学照吧！
-@choice "笑"
-@choice "哭"
+@choice "笑" set:schoolphoto=0
+@choice "哭" set:schoolphoto=1
 @stop
 
 # sceneSchool
+@sfx afterschool volume:0.2
 @back 排挤
-下课地时候看到同桌被高年级的同学欺负...
+下课的时候看到同桌被高年级的同学欺负...
 @choice "幸灾乐祸" set:score++
 @choice "想办法帮助他"
 @stop
@@ -59,12 +57,13 @@
 # photoExam
 @back 准考证
 毕业考就要来临，需要上交一张准考证照片！
-@choice "笑"
-@choice "哭"
+@choice "笑" set:zkz=0
+@choice "哭" set:zkz=1
 @stop
 
 # sceneExam1
 @back exam
+@sfx exam
 开始考试！
 考试对学生来说是（ ）的事情。
 @choice "一如既往" goto:.sceneExam2
@@ -74,6 +73,7 @@
 @stop
 
 # sceneExam2
+@sfx exam
 继续考试！
 找规律：3，2，3，7，18，（）
 @choice "36" goto:.sceneScore0
@@ -98,6 +98,7 @@
 
 # sceneWork
 @back 工作
+@sfx click
 大学毕业后，准备找一份工作开始赚钱。
 你因为工作来到一座陌生的城市...
 @choice 担心难以适应新的环境 set:score++
@@ -105,30 +106,34 @@
 @stop
 
 # photoWork
+@back 工牌
 新入职公司，拍一张工作牌照片吧！
-@choice "笑"
-@choice "哭"
+@choice "笑" set:gp=10
+@choice "哭" set:gp=11
 @stop
 
 # sceneOffice
-初入职场，有很多不懂的事，经理前来指出你工作上的失误...
-@choice 赶紧承认错误 goto.sceneLetter0
-@choice 尝试辩解来推卸责任 set:score++ goto.sceneLetter0
+@back office
+初入职场，有很多不懂的事，经理前来指出我工作上的失误...
+@choice 赶紧承认错误
+@choice 尝试辩解来推卸责任 set:score++
 @stop
-
+@goto .sceneLetter0
 
 # sceneAbroad
 @back 选择
 大学毕业后，准备出国继续深造...
 
 # photoPassport
+@back passport
 拍一张护照照片吧！
-@choice "笑"
-@choice "哭"
+@choice "笑" set:passportphoto=10
+@choice "哭" set:passportphoto=11
 @stop
 
 # sceneAbroad2
-出国的前一晚上，因为即将离开故土难以入眠...
+@back 出国前
+出国的前一晚上，因为即将离开生活了十几年的家难以入眠...
 @choice 担心难以适应新的环境 set:score++
 @choice 期待新的生活
 @stop
@@ -136,16 +141,50 @@
 # sceneAbroad3
 @back 孤独
 虽然国外学习的生活充实忙碌，但时常感到孤独....
-@choice 打电话向朋友倾诉 goto.sceneLetter0
-@choice 自己一个人排解 set:score++ goto.sceneLetter0
+@choice 打电话向朋友倾诉 goto:.sceneLetter0
+@choice 自己一个人排解 set:score++ goto:.sceneLetter0
 @stop
 
 # sceneLetter0
-开启新的生活已经有一些时日了，这段时间偶尔会想起学生时代的生活，除了习以为常的考试，也决定了我的性格。
+
+@back 出国
+开启新的生活已经有一些时日了，这段时间偶尔会想起学生时代的生活，除了习以为常的考试，遇见的人和事也决定了我的性格。
 @if score<=1
 	0-1 我很有自信心，能与人和睦相处。在今后的生活中，希望这样的自信可以伴随着我迎接更多挑战。
 @elseif 2<=score<=3
-	2-3 有时我会缺乏一些自信心，行事可能保守缺少魄力，但我仍安于现状，生活在平静的环境中。
+	2-3 有时我会缺乏一些自信心，行事可能保守缺少魄力。我的自卑感或许是我不太了解周围人的真实情况，对所焦虑的事没有清晰的认识，使得我偶尔会陷入自我怀疑。但好在我能够安于现状，生活在平静的环境中。
 @else
   4-5 有时候发现，即使我在表面上自信满满，但始终有一种强烈的自卑感在心中，让我在自负和自卑的两级来回徘徊。有时这样的矛盾让我感到痛苦，也许我也该需要做出一些改变了....
 @endif
+
+偶然翻开学生时代的相册， 里面记录着我从小到大阴晴不定的我。
+
+@back familyphotobg-s if:"familyphoto=1"
+@back familyphotobg-h if:"familyphoto=0"
+和爸爸妈妈的全家福
+
+@back school-s if:"schoolphoto=1"
+@back school-h if:"schoolphoto=0"
+上学第一天在学校大楼前
+
+@back 准考证-s if:"zkz=1"
+@back 准考证-h if:"zkz=0"
+决定命运的考试准考证
+
+@if passportphoto>9
+@back passport-s if:"passportphoto=11"
+@back passport-h if:"passportphoto=10"
+护照和登机牌
+@endif
+
+@if gp>9
+@back 工牌-s if:"gp=11"
+@back 工牌-h if:"gp=10"
+第一次上班的工作牌
+@endif
+
+# ending
+@back title
+the end
+
+@stop

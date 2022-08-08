@@ -228,6 +228,54 @@ MonoBehaviour:
     - name: title
       pathPrefix: Backgrounds/MainBackground
       guid: 5cdefb6ad9038479e984ef34b65b6a97
+    - name: familyphotobg
+      pathPrefix: Backgrounds/MainBackground
+      guid: b57349b8d3010408c8ecfff795727f39
+    - name: office
+      pathPrefix: Backgrounds/MainBackground
+      guid: 72a493045fa5145db8730eda4d8b24f9
+    - name: passport
+      pathPrefix: Backgrounds/MainBackground
+      guid: 88c77b228db1444af84b67c9506ab879
+    - name: "\u51FA\u56FD\u524D"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 22389c1d0c30845c383433e312aa2c4f
+    - name: familyphotobg-s
+      pathPrefix: Backgrounds/MainBackground
+      guid: 4d219829c8f8449dc915902177bc94df
+    - name: familyphotobg-h
+      pathPrefix: Backgrounds/MainBackground
+      guid: 48d5513cac3144a9f8e4c823d7138382
+    - name: "\u51C6\u8003\u8BC1-h"
+      pathPrefix: Backgrounds/MainBackground
+      guid: d57e217b242a14feaac90e91a6a270d6
+    - name: "\u51C6\u8003\u8BC1-s"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 1c10b64d22cda495fbaf57b5cfa4a891
+    - name: school-h
+      pathPrefix: Backgrounds/MainBackground
+      guid: 94de0a52d3b694dfe874c0fbd99b31aa
+    - name: school-s
+      pathPrefix: Backgrounds/MainBackground
+      guid: 72f24468dce354781ad78517db9e99ca
+    - name: passport-h
+      pathPrefix: Backgrounds/MainBackground
+      guid: c481cf12bf45c4892808d13f18d965b3
+    - name: passport-s
+      pathPrefix: Backgrounds/MainBackground
+      guid: 9c56568a3e14a4bcc89b06ec1ef4aa34
+    - name: "\u5DE5\u724C"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 705ecc75190cf4af6988c8ff0295c6c4
+    - name: "\u5DE5\u724C-s"
+      pathPrefix: Backgrounds/MainBackground
+      guid: 053a7d60046ce4a6e89b3efc021a4d08
+    - name: "\u5DE5\u724C-h"
+      pathPrefix: Backgrounds/MainBackground
+      guid: f2e2c5ea8d24f4f7bbc8658c342f602d
+    - name: instruction01
+      pathPrefix: Backgrounds/MainBackground
+      guid: e011b80f2d8b24c5f9da00b12852a18d
   - Id: Unlockables
     Resources: []
   - Id: Audio
@@ -238,8 +286,21 @@ MonoBehaviour:
     - name: baby
       pathPrefix: Audio
       guid: f0f5f0ed3322c4fabb8953ce8ca9294f
-  - Id: ChoiceHandlers/c9418415-fc10-44de-9422-1460724ab8fb
-    Resources:
-    - name: ButtonMoodMe
-      pathPrefix: ChoiceHandlers
-      guid: f0d3f0564960dc44cb7eb7212c1ee9a7
+    - name: click
+      pathPrefix: Audio
+      guid: cca8ef38cd6384fde9db79baa08988d3
+    - name: plane
+      pathPrefix: Audio
+      guid: d6241a3b715334728a0d9c9c1b86c5f4
+    - name: babysmile
+      pathPrefix: Audio
+      guid: 8825d5605e6574b0791811348a9838f3
+    - name: babycry
+      pathPrefix: Audio
+      guid: b81c6c8e59fb949d6b25b3aea1d4ce37
+    - name: afterschool
+      pathPrefix: Audio
+      guid: 8dccdc541a7e74436aae2de77f6e83e9
+    - name: exam
+      pathPrefix: Audio
+      guid: 66dd2b1b7f8f84277bfdb98a861ae686
