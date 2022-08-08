@@ -304,3 +304,15 @@ MonoBehaviour:
     - name: exam
       pathPrefix: Audio
       guid: 66dd2b1b7f8f84277bfdb98a861ae686
+  - Id: Characters/26d8e2b9-5835-4e7f-97b7-65cbff6ee7ee
+    Resources:
+    - name: iconHappy
+      pathPrefix: Characters/iconHappy
+      guid: c7f3cdbd6da5644e4a1923d9603180f5
+  - Id: Characters/5a21fc0a-66ef-40be-be1e-dda976d248fe
+    Resources:
+    - name: iconSad
+      pathPrefix: Characters/iconSad
+      guid: 8bc7a91180e3c46829c502fc39bdbbec
+  - Id: CharacterAvatars
+    Resources: []
