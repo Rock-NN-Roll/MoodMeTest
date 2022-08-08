@@ -213,3 +213,13 @@ MonoBehaviour:
     - name: "\u5B64\u72EC"
       pathPrefix: Backgrounds/MainBackground
       guid: 4df1c151d4c7c47078ce73005e30bdf6
+  - Id: ChoiceHandlers/c9418415-fc10-44de-9422-1460724ab8fb
+    Resources:
+    - name: ButtonMoodMe
+      pathPrefix: ChoiceHandlers
+      guid: f0d3f0564960dc44cb7eb7212c1ee9a7
+  - Id: ChoiceHandlers/b30c15ad-b14e-43cf-b738-dacedfd60a25
+    Resources:
+    - name: ButtonArea
+      pathPrefix: ChoiceHandlers
+      guid: 4fa6d62f894ae6e4698bfa8af59e7942

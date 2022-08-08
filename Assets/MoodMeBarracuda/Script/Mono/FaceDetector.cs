@@ -43,7 +43,7 @@ namespace MoodMe
 
         public static float[] OutputCropFloat;
 
-
+		public static Texture2D _cropTexture;
 
         private IWorker engine;
 
@@ -114,7 +114,7 @@ namespace MoodMe
                 tensor = new Tensor(1, ImageNetworkHeight, ImageNetworkWidth, ChannelCount, tensorData);
                 DateTime timestamp;
                 timestamp = DateTime.Now;
-                output = engine.ExecuteAndWaitForCompletion(tensor);
+                output = engine.Execute(tensor).CopyOutput();
                 //Debug.Log("FACE DETECTOR INFERENCE TIME: " + (DateTime.Now - timestamp).TotalMilliseconds + " ms");
                 scores = engine.PeekOutput("scores");
                 boxes = engine.PeekOutput("boxes");
@@ -146,7 +146,7 @@ namespace MoodMe
                         if (_souceRec.Contains(_cropStart) && _souceRec.Contains(_cropEnd))
                         {
                             OutputCrop = new Color32[_boxSide * _boxSide];
-                            Texture2D _cropTexture = new Texture2D((int)(_boxSide * xScale), (int)(_boxSide * yScale), TextureFormat.RGBA32, false);
+                            _cropTexture = new Texture2D((int)(_boxSide * xScale), (int)(_boxSide * yScale), TextureFormat.RGBA32, false);
                             _cropTexture.SetPixels(0, 0, (int)(_boxSide * xScale), (int)(_boxSide * yScale), CameraManager.GetTexture.GetPixels(_xCrop, _yCrop, _xBoxSide, _yBoxSide));
                             _cropTexture.Apply();
 
@@ -171,9 +171,6 @@ namespace MoodMe
                     }
 
                 }
-
-
-
 
                 //foreach (FaceInfo faceInfo in predict_boxes)
                 //{
@@ -236,56 +233,56 @@ namespace MoodMe
 
         }
 
-        private void OnGUI()
-        {
-
-
-            if (predictDone && GUIPreview)
-            {
-                GUIW = Screen.width;
-                GUIH = Screen.height;
-                float ratio = (GUIW>=GUIH?GUIW:GUIH) / ImageNetworkWidth;
-                int centerSquareWidth = Mathf.FloorToInt((GUIW / 2) - ((ImageNetworkWidth / 2) * ratio));
-                int centerSquareHeight = Mathf.FloorToInt((GUIH / 2) - ((ImageNetworkHeight / 2) * ratio));
-                for (int i = 0; i < predict_boxes.Count; i++)
-                {
-                    float boxWidth = predict_boxes[i].x2 - predict_boxes[i].x1;
-                    float boxHeight = predict_boxes[i].y2 - predict_boxes[i].y1;
-
-                    float bigEdge = boxWidth > boxHeight ? boxWidth : boxHeight;
-                    float smallEdge = boxWidth < boxHeight ? boxWidth : boxHeight;
-
-                    float bigX0 = boxWidth > boxHeight ? (predict_boxes[i].x1 * ratio) : ((predict_boxes[i].x1 - (bigEdge - smallEdge) / 2) * ratio);
-                    float bigY0 = boxWidth < boxHeight ? (predict_boxes[i].y1 * ratio) : ((predict_boxes[i].y1 - (bigEdge - smallEdge) / 2) * ratio);
-
-                    //float bigX1 = boxWidth > boxHeight ? (predict_boxes[i][2] * ratio) : ((predict_boxes[i][2] + (bigEdge - smallEdge) / 2) * ratio);
-                    //float bigY1 = boxWidth < boxHeight ? (predict_boxes[i][3] * ratio) : ((predict_boxes[i][3] + (bigEdge - smallEdge) / 2) * ratio);
-
-                    //float smallX0 = boxWidth < boxHeight ? (predict_boxes[i].x1 * ratio) : ((predict_boxes[i].x1 + (bigEdge - smallEdge) / 2) * ratio);
-                    //float smallY0 = boxWidth > boxHeight ? (predict_boxes[i].y1 * ratio) : ((predict_boxes[i].y1 + (bigEdge - smallEdge) / 2) * ratio);
-
-                    //float smallX1 = boxWidth < boxHeight ? (predict_boxes[i][2] * ratio) : ((predict_boxes[i][2] - (bigEdge - smallEdge) / 2) * ratio);
-                    //float smallY1 = boxWidth > boxHeight ? (predict_boxes[i][3] * ratio) : ((predict_boxes[i][3] - (bigEdge - smallEdge) / 2) * ratio);
-
-                    Rect rectInst = new Rect(centerSquareWidth + bigX0,
-                                            centerSquareHeight + bigY0,
-                                            bigEdge * ratio,
-                                            bigEdge * ratio);
-
-                    GUI.Box(rectInst, GUIContent.none, _staticRectStyle);
-
-                    //rectInst = new Rect(centerSquareWidth + smallX0,
-                    //                                        centerSquareHeight + smallY0,
-                    //                                        smallEdge * ratio,
-                    //                                        smallEdge * ratio);
-
-                    //GUI.Box(rectInst, GUIContent.none, _staticRectStyle);
-
-
-                }
-
-            }
-        }
+        // private void OnGUI()
+        // {
+        //
+        //
+        //     if (predictDone && GUIPreview)
+        //     {
+        //         GUIW = Screen.width;
+        //         GUIH = Screen.height;
+        //         float ratio = (GUIW>=GUIH?GUIW:GUIH) / ImageNetworkWidth;
+        //         int centerSquareWidth = Mathf.FloorToInt((GUIW / 2) - ((ImageNetworkWidth / 2) * ratio));
+        //         int centerSquareHeight = Mathf.FloorToInt((GUIH / 2) - ((ImageNetworkHeight / 2) * ratio));
+        //         for (int i = 0; i < predict_boxes.Count; i++)
+        //         {
+        //             float boxWidth = predict_boxes[i].x2 - predict_boxes[i].x1;
+        //             float boxHeight = predict_boxes[i].y2 - predict_boxes[i].y1;
+        //
+        //             float bigEdge = boxWidth > boxHeight ? boxWidth : boxHeight;
+        //             float smallEdge = boxWidth < boxHeight ? boxWidth : boxHeight;
+        //
+        //             float bigX0 = boxWidth > boxHeight ? (predict_boxes[i].x1 * ratio) : ((predict_boxes[i].x1 - (bigEdge - smallEdge) / 2) * ratio);
+        //             float bigY0 = boxWidth < boxHeight ? (predict_boxes[i].y1 * ratio) : ((predict_boxes[i].y1 - (bigEdge - smallEdge) / 2) * ratio);
+        //
+        //             //float bigX1 = boxWidth > boxHeight ? (predict_boxes[i][2] * ratio) : ((predict_boxes[i][2] + (bigEdge - smallEdge) / 2) * ratio);
+        //             //float bigY1 = boxWidth < boxHeight ? (predict_boxes[i][3] * ratio) : ((predict_boxes[i][3] + (bigEdge - smallEdge) / 2) * ratio);
+        //
+        //             //float smallX0 = boxWidth < boxHeight ? (predict_boxes[i].x1 * ratio) : ((predict_boxes[i].x1 + (bigEdge - smallEdge) / 2) * ratio);
+        //             //float smallY0 = boxWidth > boxHeight ? (predict_boxes[i].y1 * ratio) : ((predict_boxes[i].y1 + (bigEdge - smallEdge) / 2) * ratio);
+        //
+        //             //float smallX1 = boxWidth < boxHeight ? (predict_boxes[i][2] * ratio) : ((predict_boxes[i][2] - (bigEdge - smallEdge) / 2) * ratio);
+        //             //float smallY1 = boxWidth > boxHeight ? (predict_boxes[i][3] * ratio) : ((predict_boxes[i][3] - (bigEdge - smallEdge) / 2) * ratio);
+        //
+        //             Rect rectInst = new Rect(centerSquareWidth + bigX0,
+        //                                     centerSquareHeight + bigY0,
+        //                                     bigEdge * ratio,
+        //                                     bigEdge * ratio);
+        //
+        //             GUI.Box(rectInst, GUIContent.none, _staticRectStyle);
+        //
+        //             //rectInst = new Rect(centerSquareWidth + smallX0,
+        //             //                                        centerSquareHeight + smallY0,
+        //             //                                        smallEdge * ratio,
+        //             //                                        smallEdge * ratio);
+        //
+        //             //GUI.Box(rectInst, GUIContent.none, _staticRectStyle);
+        //
+        //
+        //         }
+        //
+        //     }
+        // }
 
         void OnDestroy()
         {
@@ -293,6 +290,7 @@ namespace MoodMe
             boxes.Dispose();
             output.Dispose();
             tensor.Dispose();
+			engine.Dispose();				 
         }
 
     }

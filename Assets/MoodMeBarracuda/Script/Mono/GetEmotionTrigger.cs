@@ -3,56 +3,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MoodMe;
+using System;
+using UnityEngine.Events;
+
 namespace MoodMe
 {
-    [RequireComponent(typeof(Slider))]
-    public class GetEmotionValue : MonoBehaviour
+    
+    public class GetEmotionTrigger : MonoBehaviour
     {
-        private Slider thisSlider;
         public enum EmotionEnum
         {
             Angry, Disgust, Happy, Neutral, Sad, Scared, Surprised, EmotionIndex
         }
 
         public EmotionEnum Emotion;
+        [Serializable]
+        public class TriggerClass : UnityEvent { }
+        public TriggerClass EventToTrigger;
+
+        [Range (0,1)]
+        public float Threshold;
+
         // Start is called before the first frame update
         void Start()
         {
-            thisSlider = GetComponent<Slider>();
+
         }
 
         // Update is called once per frame
         void Update()
         {
+            float value = 0;
+
             switch (Emotion)
             {
                 case EmotionEnum.Angry:
-                    thisSlider.value = EmotionsManager.Emotions.angry;
+                    value = EmotionsManager.Emotions.angry;
                     break;
                 case EmotionEnum.Disgust:
-                    thisSlider.value = EmotionsManager.Emotions.disgust;
+                    value = EmotionsManager.Emotions.disgust;
                     break;
                 case EmotionEnum.Happy:
-                    thisSlider.value = EmotionsManager.Emotions.happy;
+                    value = EmotionsManager.Emotions.happy;
                     break;
                 case EmotionEnum.Neutral:
-                    thisSlider.value = EmotionsManager.Emotions.neutral;
+                    value = EmotionsManager.Emotions.neutral;
                     break;
                 case EmotionEnum.Sad:
-                    thisSlider.value = EmotionsManager.Emotions.sad;
+                    value = EmotionsManager.Emotions.sad;
                     break;
                 case EmotionEnum.Scared:
-                    thisSlider.value = EmotionsManager.Emotions.scared;
+                    value = EmotionsManager.Emotions.scared;
                     break;
                 case EmotionEnum.Surprised:
-                    thisSlider.value = EmotionsManager.Emotions.surprised;
+                    value = EmotionsManager.Emotions.surprised;
                     break;
                 case EmotionEnum.EmotionIndex:
-                    thisSlider.value = EmotionsManager.EmotionIndex;
+                    value = EmotionsManager.EmotionIndex;
                     break;
             }
 
-
+            if (value>Threshold)
+            {
+                EventToTrigger.Invoke();
+            }
         }
+
+
     }
 }

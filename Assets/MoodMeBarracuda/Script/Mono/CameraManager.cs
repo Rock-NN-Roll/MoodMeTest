@@ -31,6 +31,10 @@ namespace MoodMe
         // Start is called before the first frame update
         void Start()
         {
+			if (PlayerPrefs.GetInt("Webcam")>=0)
+            {
+                DeviceIndex = PlayerPrefs.GetInt("Webcam");
+            }									
             //Webcam select
             try
             {
@@ -57,11 +61,11 @@ namespace MoodMe
             //Webcam start
             if (VideoTexure == null)
             {
-                //Debug.Log("DEVICES START");
+                Debug.Log("DEVICES START");
                 CameraTexture.Play();
-                //Debug.Log("DEVICES WAIT");
+                Debug.Log("DEVICES WAIT");
                 StartCoroutine(WaitForWebCamAndInitialize(CameraTexture));
-                //Debug.Log("Camera Texture size " + CameraTexture.width + " x " + CameraTexture.height);
+                Debug.Log("Camera Texture size " + CameraTexture.width + " x " + CameraTexture.height);
 
             }
             else
@@ -70,7 +74,6 @@ namespace MoodMe
                 _webcamSet = true;
             }
             //RGBA buffer creation
-         
 
         }
 
@@ -88,7 +91,7 @@ namespace MoodMe
         {
             while (_webCamTexture.width < 100)
                 yield return null;
-            //Debug.Log("******** Camera Texture size now is " + CameraTexture.width + " x " + CameraTexture.height);
+            Debug.Log("******** Camera Texture size now is " + CameraTexture.width + " x " + CameraTexture.height);
             GetPixels = new Color32[CameraTexture.width * CameraTexture.height];
             ExportWebcamTexture = new Texture2D(CameraTexture.width, CameraTexture.height,TextureFormat.RGBA32 , false);
             _webcamSet = true;
@@ -109,14 +112,15 @@ namespace MoodMe
             }
             else
             {
-                if (WebcamReady)
-                {
-                    //Get the next frame from the webcam
-                    bool waitForCamera = true;
-                    while (waitForCamera)
-                    {
-                        try
+                 if (WebcamReady)
+                 {
+                        //Get the next frame from the webcam
+                        bool waitForCamera = true;
+                        var curTime = Time.time;
+                        if (waitForCamera)
                         {
+                         try
+                         {
                             //Store to RGBA buffer
                             CameraTexture.GetPixels32(GetPixels);
                             //Update the Webcam plane texture
@@ -124,16 +128,29 @@ namespace MoodMe
                             ((Texture2D)WebcamTexture).Apply();
                             Graphics.CopyTexture(WebcamTexture, ExportWebcamTexture);
                             waitForCamera = false;
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.Log("Camera not running " + ex.Message);
-                        }
-                    }
-                }
+                         }
+                         catch (Exception ex)
+                         {
+                             Debug.Log("Camera not running " + ex.Message);
+                         }
+                     }
+                 }
             }
-            
-
+            //
         }
+		public void StartCamera(int index)
+        {
+            DeviceIndex = index;
+            string camName = WebCamTexture.devices[DeviceIndex].name;
+            CameraTexture = new WebCamTexture(camName, _width, _height, 30);
+            CameraTexture.Play();
+            StartCoroutine(WaitForWebCamAndInitialize(CameraTexture));
+        }
+
+        public void StopCamera()
+        {
+            CameraTexture.Stop();
+            //WebCamTexture.Destroy(CameraTexture);
+        }								  
     }
 }
