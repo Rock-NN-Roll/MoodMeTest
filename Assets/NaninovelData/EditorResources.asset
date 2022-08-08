@@ -304,3 +304,8 @@ MonoBehaviour:
     - name: exam
       pathPrefix: Audio
       guid: 66dd2b1b7f8f84277bfdb98a861ae686
+  - Id: ChoiceHandlers/c9418415-fc10-44de-9422-1460724ab8fb
+    Resources:
+    - name: ButtonMoodMe
+      pathPrefix: ChoiceHandlers
+      guid: f0d3f0564960dc44cb7eb7212c1ee9a7
