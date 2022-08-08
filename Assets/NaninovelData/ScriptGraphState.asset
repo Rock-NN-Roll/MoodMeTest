@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98aa4b58b11e9d4ca9dd8a4bf7bb71d, type: 3}
   m_Name: ScriptGraphState
   m_EditorClassIdentifier: 
-  NodesState: []
+  NodesState:
+  - scriptName: TestScript
+    position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 186
+      height: 629

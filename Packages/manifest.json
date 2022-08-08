@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.barracuda": "https://github.com/Unity-Technologies/barracuda-release.git",
     "com.unity.burst": "1.6.6",
     "com.unity.collab-proxy": "1.17.1",
